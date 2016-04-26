@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.txsing.dblogic;
+package com.txsing.bookhotel.dblogic;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,13 +1,14 @@
 <%-- 
     Document   : view-log
     Created on : Dec 18, 2013, 7:39:31 PM
-    Author     : Kara
+    Author     : txsing
 --%>
 
 <%@page language="java" %>
 <%@page import="com.mysql.jdbc.Driver" %>
 <%@page import="java.sql.*" %> 
-<%@page import="com.txsing.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -62,19 +63,19 @@
         <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
     </head>
     <body>
-        
+
         <!-- Background Image -->
         <img src="images/bg1.jpg" class="bg" alt="" />
-        
+
         <!-- Root Container -->
         <div id="root-container" class="container">
             <div id="wrapper" class="sixteen columns">
-                
+
                 <!-- Banner -->
                 <div id="sub-banner">
                     <img src="images/banner/sub-banner2.jpg" alt="" />
                 </div>
-                
+
                 <!-- Main Menu -->
                 <div id="menu" class="home">
                     <ul id="root-menu" class="sf-menu">
@@ -87,7 +88,7 @@
                         <li>
                             <a href="edit-orders.jsp">Orders</a>
                         </li>
-                        <%if(SignIn.idS.equals("admin")){%>
+                        <%if (SignIn.idS.equals("admin")) {%>
                         <li>
                             <a href="edit-staffs.jsp">Staffs</a>
                         </li>
@@ -97,7 +98,7 @@
                         <%}%>
                     </ul>
                 </div>
-                
+
                 <!-- Content -->
                 <div id="content" class="reservation">
                     <div id="intro">
@@ -109,48 +110,44 @@
                     <div class="container section">
                         <div class="full-width column">
                             <%
-                                String sql = "select * from log where idH = '"+SignIn.idH+"' ";
-                                String userName = "txsing";
-                                String userPasswd = "scse1196";
-                                String dbName = "test";
-                                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                Connection connection = DriverManager.getConnection(url);
+                                String sql = "select * from logs where idH = '" + SignIn.idH + "' ";
+                                Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                        SystemParameters.user, SystemParameters.passwd);
                                 Statement statement = connection.createStatement();
                                 ResultSet rs = statement.executeQuery(sql);
                             %>
-                                <table border="0">
-                                    <thead>
-                                        <tr>
-                                            <th> Staff id </th>
-                                            <th> Indent No. </th>
-                                            <th> Time </th>
-                                            <th> Operation type </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% while (rs.next()) {%>
-                                        <tr>
-                                            <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(3) + "&nbsp;&nbsp;&nbsp;");%></td>
-                                            <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(4) + "&nbsp;&nbsp;&nbsp;");%></td>
-                                            <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(5) + "&nbsp;&nbsp;&nbsp;");%></td>
-                                            <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(6) + "&nbsp;&nbsp;&nbsp;");%></td>
-                                        </tr>
-                                        <%}%>
-                                    </tbody>
-                                </table>
+                            <table border="0">
+                                <thead>
+                                    <tr>
+                                        <th> Staff id </th>
+                                        <th> Indent No. </th>
+                                        <th> Time </th>
+                                        <th> Operation type </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% while (rs.next()) {%>
+                                    <tr>
+                                        <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(3) + "&nbsp;&nbsp;&nbsp;");%></td>
+                                        <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(4) + "&nbsp;&nbsp;&nbsp;");%></td>
+                                        <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(5) + "&nbsp;&nbsp;&nbsp;");%></td>
+                                        <td><% out.print("&nbsp;&nbsp;&nbsp;" + rs.getString(6) + "&nbsp;&nbsp;&nbsp;");%></td>
+                                    </tr>
+                                    <%}%>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                
-                
-                
+
+
+
                 <div id="copyright">
                     <div class="container section end">
                         <span id="text">  </span>
                     </div>
                 </div>
-                                    
+
             </div>
         </div>
 
@@ -168,6 +165,6 @@
         <script type="text/javascript" src="scripts/ui.spinner.min.js"></script>
         <script type="text/javascript" src="scripts/lamoon.js"></script>
 
-    <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
-</body>
+        <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+    </body>
 </html>

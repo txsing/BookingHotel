@@ -7,7 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" %> 
 <%@page import="com.mysql.jdbc.Driver" %> 
-<%@page import="java.sql.*" %> 
+<%@page import="java.sql.*" %>
+<%@page import="com.txsing.bookhotel.util.*"%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -122,13 +123,10 @@
                                 String sql2 = (String) session.getAttribute("sql2");
                                 String sql3 = (String) session.getAttribute("sql3");
                                 String sql4 = (String) session.getAttribute("sql4");
-                                String userName = "txsing";
-                                String userPasswd = "scse1196";
-                                String dbName = "test";
-                                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                Connection connection = DriverManager.getConnection(url);
+                                Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                        SystemParameters.user, SystemParameters.passwd);
                                 Statement statement = connection.createStatement();
+                                
                                 statement.execute(sql1);
                                 statement.executeUpdate(sql2);
                                 statement.execute(sql3);

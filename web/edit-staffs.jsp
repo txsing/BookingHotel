@@ -7,7 +7,8 @@
 <%@page language="java" %>
 <%@page import="com.mysql.jdbc.Driver" %>
 <%@page import="java.sql.*" %> 
-<%@page import="com.txsing.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -109,12 +110,8 @@
                         <div class="full-width column">
                             <%
                                 String sql = "select * from staff where idH = '"+SignIn.idH+"' "+"and idS <> 'admin'";
-                                String userName = "txsing";
-                                String userPasswd = "scse1196";
-                                String dbName = "test";
-                                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                Connection connection = DriverManager.getConnection(url);
+                                Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                        SystemParameters.user, SystemParameters.passwd);
                                 Statement statement = connection.createStatement();
                                 ResultSet rs = statement.executeQuery(sql);
                             %>

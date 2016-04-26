@@ -8,6 +8,7 @@
 <%@page language="java" %> 
 <%@page import="com.mysql.jdbc.Driver" %> 
 <%@page import="java.sql.*" %> 
+<%@page import="com.txsing.bookhotel.util.*"%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -54,19 +55,19 @@
         <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
     </head>
     <body>
-        
+
         <!-- Background Image -->
         <img src="images/bg1.jpg" class="bg" alt="" />
-        
+
         <!-- Root Container -->
         <div id="root-container" class="container">
             <div id="wrapper" class="sixteen columns">
-                
+
                 <!-- Banner -->
                 <div id="sub-banner">
                     <img src="images/banner/sub-banner5.jpg" alt="" />
                 </div>
-               
+
                 <!-- Main Menu -->
                 <div id="menu" class="home">
                     <ul id="root-menu" class="sf-menu">
@@ -95,7 +96,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <!-- Content -->
                 <div id="content">
                     <div id="intro">
@@ -107,56 +108,57 @@
                     <div id="blog" class="container section">
                         <div id="blog-content" class="full-width column">
                             <%
-                                String sql = (String) session.getAttribute("sql");
-                                String userName = "txsing";
-                                String userPasswd = "scse1196";
-                                String dbName = "test";
-                                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                Connection connection = DriverManager.getConnection(url);
-                                Statement statement = connection.createStatement();
-                                ResultSet rs = statement.executeQuery(sql);
+                                ResultSet rs = null;
+                                try{
+                                    String sql = (String) session.getAttribute("sql");
+                                    Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                            SystemParameters.user, SystemParameters.passwd);
+                                    Statement statement = connection.createStatement();
+                                    rs = statement.executeQuery(sql);
+                                }catch(Exception e){
+                                    System.err.println(e.getMessage());
+                                }                            
                             %>
                             <form action="ChooseHotel" method="get">
-                                    <% while (rs.next()) {%>
-                                    <div class="blog-item">
-                                                <img src="images/blog/blog3.jpg" width="750" alt="" />
-                                        <h2 class="blog"><%out.print(rs.getString(1));%></h2>
-                                        <p class="blog-item-meta">
-                                            <%out.print(rs.getString(4));%> star(s) hotel
-                                        </p>
-                                        <p>Location: <%out.print(rs.getString(2));%></p>
-                                        <p>Facility: <%out.print(rs.getString(3));%></p>
-                                        <p>Contact:  <%out.print(rs.getString(5));%></p>
-                                        <input type="radio" name="hotelid" value =<%=rs.getString(6)%>> Choose<br>
-                                    </div>
-                                    <%}%>
+                                <% while (rs.next()) {%>
+                                <div class="blog-item">
+                                    <img src="images/blog/blog3.jpg" width="750" alt="" />
+                                    <h2 class="blog"><%out.print(rs.getString(1));%></h2>
+                                    <p class="blog-item-meta">
+                                        <%out.print(rs.getString(4));%> star(s) hotel
+                                    </p>
+                                    <p>Location: <%out.print(rs.getString(2));%></p>
+                                    <p>Facility: <%out.print(rs.getString(3));%></p>
+                                    <p>Contact:  <%out.print(rs.getString(5));%></p>
+                                    <input type="radio" name="hotelid" value =<%=rs.getString(6)%>> Choose<br>
+                                </div>
+                                <%}%>
                                 <input type="submit" class="small gray button" value="Submit" />
                             </form>
+                        </div>
                     </div>
-                </div>
-                
-               
-                
-                <div id="copyright">
-                    <div class="container section end">
-                        <span id="text">  </span>
+
+
+
+                    <div id="copyright">
+                        <div class="container section end">
+                            <span id="text">  </span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            
-        <!-- JavaScript Files -->
-        <script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="scripts/jquery.easing.1.3.js"></script>
-        <script type="text/javascript" src="scripts/jquery.flexslider-min.js"></script>
-        <script type="text/javascript" src="scripts/jquery.hoverIntent.minified.js"></script>
-        <script type="text/javascript" src="scripts/superfish.js"></script>
-        <script type="text/javascript" src="scripts/jquery.cycle.lite.js"></script>
-        <script type="text/javascript" src="scripts/jquery.fancybox-1.3.4.pack.js"></script>
-        <script type="text/javascript" src="scripts/lamoon.js"></script>
 
-    <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
-</body>
+            <!-- JavaScript Files -->
+            <script type="text/javascript" src="scripts/jquery-1.7.2.min.js"></script>
+            <script type="text/javascript" src="scripts/jquery.easing.1.3.js"></script>
+            <script type="text/javascript" src="scripts/jquery.flexslider-min.js"></script>
+            <script type="text/javascript" src="scripts/jquery.hoverIntent.minified.js"></script>
+            <script type="text/javascript" src="scripts/superfish.js"></script>
+            <script type="text/javascript" src="scripts/jquery.cycle.lite.js"></script>
+            <script type="text/javascript" src="scripts/jquery.fancybox-1.3.4.pack.js"></script>
+            <script type="text/javascript" src="scripts/lamoon.js"></script>
+
+            <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+    </body>
 </html>
 

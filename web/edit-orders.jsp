@@ -1,13 +1,14 @@
 <%-- 
     Document   : edit-orders
     Created on : Dec 18, 2013, 7:36:54 PM
-    Author     : Kara
+    Author     : txsing
 --%>
 
 <%@page language="java" %>
 <%@page import="com.mysql.jdbc.Driver" %>
 <%@page import="java.sql.*" %> 
-<%@page import="com.txsing.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.util.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -109,14 +110,10 @@
                     <div class="container section">
                         <div class="full-width column">
                             <%
-                                String sql = "select nameU, idO, type, checkin_time, checkout_time, create_time, price from indent,user,room where indent.idH ="
-                                        + "'"+SignIn.idH+"'" + "and indent.idU = user.idU and room.idR = indent.idR and room.idH = indent.idH";
-                                String userName = "txsing";
-                                String userPasswd = "scse1196";
-                                String dbName = "test";
-                                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                                Connection connection = DriverManager.getConnection(url);
+                                String sql = "select nameU, idO, type, checkin_time, checkout_time, create_time, price from indents,users,rooms where indents.idH ="
+                                        + "'"+SignIn.idH+"'" + "and indents.idU = users.idU and rooms.idR = indents.idR and rooms.idH = indents.idH";
+                                Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                        SystemParameters.user, SystemParameters.passwd);
                                 Statement statement = connection.createStatement();
                                 ResultSet rs = statement.executeQuery(sql);
                             %>

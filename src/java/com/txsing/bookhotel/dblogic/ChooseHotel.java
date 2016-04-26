@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.txsing.dblogic;
+package com.txsing.bookhotel.dblogic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author root
+ * @author txsing
  */
 @WebServlet(name = "ChooseHotel", urlPatterns = {"/ChooseHotel"})
 public class ChooseHotel extends HttpServlet {
@@ -56,7 +55,7 @@ public class ChooseHotel extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         hotelIdString = request.getParameter("hotelid");
-        sql = "select * from room where idH = "+"'"+hotelIdString+"'"+"and status = 'available'";
+        sql = "select * from rooms where idH = "+"'"+hotelIdString+"'"+"and status = 'available'";
         request.getSession().setAttribute("sql", sql);
         processRequest(request, response);
     }

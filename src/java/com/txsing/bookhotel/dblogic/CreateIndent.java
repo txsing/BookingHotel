@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.txsing.dblogic;
+package com.txsing.bookhotel.dblogic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,7 +64,6 @@ public class CreateIndent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        System.out.println("1111111111111111111111111111111111111111");
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyyMMddhhmmss");
         Calendar curday = Calendar.getInstance();
@@ -93,17 +92,17 @@ public class CreateIndent extends HttpServlet {
 
         String paraString3 = idU + idO + idR + idH + check_in + check_out + create_time;
         String paraString1 = idU + ageString + hpnumber + username + passport + idcard;
-        sql3 = "insert into indent values("
+        sql3 = "insert into indents values("
                 + paraString3 + ")";
 
-        sql2 = "update room set status = 'unavailable' where idR ="
+        sql2 = "update rooms set status = 'unavailable' where idR ="
                 + idR1 + " and " + "idH=" + idH1;
 
-        sql1 = "insert into user values ("
+        sql1 = "insert into users values ("
                 + paraString1 + ")";
 
         sql4 = "select o.ido, h.nameh, r.size, o.checkin_time,o.checkout_time, r.price\n"
-                + "from indent o,hotel h,room r\n"
+                + "from indents o,hotels h,rooms r\n"
                 + "where o.idH = h.idH and o.idR = r.idR and r.idH = o.idH and o.idO ="
                 + idO1;
         request.getSession().setAttribute("sql1", sql1);

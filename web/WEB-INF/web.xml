@@ -2,39 +2,39 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <servlet>
         <servlet-name>SearchHotel</servlet-name>
-        <servlet-class>com.txsing.dblogic.SearchHotel</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.SearchHotel</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChooseHotel</servlet-name>
-        <servlet-class>com.txsing.dblogic.ChooseHotel</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.ChooseHotel</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChooseRoom</servlet-name>
-        <servlet-class>com.txsing.dblogic.ChooseRoom</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.ChooseRoom</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateIndent</servlet-name>
-        <servlet-class>com.txsing.dblogic.CreateIndent</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.CreateIndent</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignIn</servlet-name>
-        <servlet-class>com.txsing.dblogic.SignIn</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.SignIn</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ModifyHotel</servlet-name>
-        <servlet-class>com.txsing.dblogic.ModifyHotel</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.ModifyHotel</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageIndent</servlet-name>
-        <servlet-class>com.txsing.dblogic.ManageIndent</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.ManageIndent</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageStaff</servlet-name>
-        <servlet-class>com.txsing.dblogic.ManageStaff</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.ManageStaff</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddStaff</servlet-name>
-        <servlet-class>com.txsing.dblogic.AddStaff</servlet-class>
+        <servlet-class>com.txsing.bookhotel.dblogic.AddStaff</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SearchHotel</servlet-name>

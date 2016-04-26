@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.txsing.bookhotel.dblogic;
 
-package com.txsing.dblogic;
-
+import com.txsing.bookhotel.util.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +23,7 @@ public class AddStaff extends HttpServlet {
 
     Connection connection;
     Statement statement;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,17 +41,17 @@ public class AddStaff extends HttpServlet {
             String name = request.getParameter("name");
             String id = request.getParameter("id");
             String password = request.getParameter("password");
-           
-            String sql = "insert into staff values('"+id+"','"+name+"','"+password+"','"+SignIn.idH+"')";
 
-            statement.executeUpdate(sql);  
+            String sql = "insert into staffs values('" + id + "','" + name + "','" + password + "','" + SignIn.idH + "')";
+
+            statement.executeUpdate(sql);
             statement.close();
             connection.close();
             out.print("<script type='text/javascript'>alert('successfully Added');"
-                        + "document.location.href='edit-staffs.jsp';</script>");
-        } catch(Exception e){
-        }
-        finally {
+                    + "document.location.href='edit-staffs.jsp';</script>");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
             out.close();
         }
     }
@@ -68,28 +68,14 @@ public class AddStaff extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-             //驱动程序名 
-            String driverName="com.mysql.jdbc.Driver"; 
-            //数据库用户名 
-            String userName="txsing"; 
-            //密码 
-            String userPasswd="scse1196"; 
-            //数据库名 
-            String dbName="test"; 
-            //表名 
-            String tableName="hotel"; 
-            //联结字符串 
-            String url="jdbc:mysql://localhost/"+dbName+"?user="+userName+"&password="+userPasswd; 
-            try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance(); 
-            connection=DriverManager.getConnection(url); 
-            statement = connection.createStatement();   
-                        
-            
+        try {
+            connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                    SystemParameters.user, SystemParameters.passwd);
+            statement = connection.createStatement();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
-            
+
         processRequest(request, response);
     }
 
@@ -118,4 +104,3 @@ public class AddStaff extends HttpServlet {
     }// </editor-fold>
 
 }
-

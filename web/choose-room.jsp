@@ -1,13 +1,14 @@
 <%-- 
     Document   : rooms
     Created on : Dec 17, 2013, 1:21:01 PM
-    Author     : Kara
+    Author     : txsing
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page language="java" %> 
 <%@page import="com.mysql.jdbc.Driver" %> 
 <%@page import="java.sql.*" %> 
+<%@page import="com.txsing.bookhotel.util.*"%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -54,19 +55,19 @@
         <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
     </head>
     <body>
-        
+
         <!-- Background Image -->
         <img src="images/bg1.jpg" class="bg" alt="" />
-        
+
         <!-- Root Container -->
         <div id="root-container" class="container">
             <div id="wrapper" class="sixteen columns">
-                
+
                 <!-- Banner -->
                 <div id="sub-banner">
                     <img src="images/banner/sub-banner2.jpg" alt="" />
                 </div>
-                
+
                 <!-- Main Menu -->
                 <div id="menu" class="home">
                     <ul id="root-menu" class="sf-menu">
@@ -95,7 +96,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <!-- Content -->
                 <div id="content" class="room-content">
                     <div id="intro">
@@ -106,12 +107,8 @@
                     </div>
                     <%
                         String sql = (String) session.getAttribute("sql");
-                        String userName = "txsing";
-                        String userPasswd = "scse1196";
-                        String dbName = "test";
-                        String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
-                        Class.forName("com.mysql.jdbc.Driver").newInstance();
-                        Connection connection = DriverManager.getConnection(url);
+                        Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                SystemParameters.user, SystemParameters.passwd);
                         Statement statement = connection.createStatement();
                         ResultSet rs = statement.executeQuery(sql);
                     %>
@@ -139,7 +136,7 @@
                     </form>
                 </div>
 
-                
+
                 <div id="copyright">
                     <div class="container section end">
                         <span id="text">  </span>
@@ -158,6 +155,6 @@
         <script type="text/javascript" src="scripts/jquery.fancybox-1.3.4.pack.js"></script>
         <script type="text/javascript" src="scripts/lamoon.js"></script>
 
-    <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
-</body>
+        <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+    </body>
 </html>

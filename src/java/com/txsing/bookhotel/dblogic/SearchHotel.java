@@ -1,4 +1,4 @@
-package com.txsing.dblogic;
+package com.txsing.bookhotel.dblogic;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,9 +73,9 @@ public class SearchHotel extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(SearchHotel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String sql1 = "select * FROM hotel where nameH like '%"
+        String sql1 = "select * FROM hotels where nameH like '%"
                 + hotelDescription + "%'";
-        String sql2 = "select * FROM hotel where location like '%"
+        String sql2 = "select * FROM hotels where location like '%"
                 + hotelDescription + "%'";
         sql = sql1 + " UNION " + sql2;
         request.getSession().setAttribute("sql", sql);

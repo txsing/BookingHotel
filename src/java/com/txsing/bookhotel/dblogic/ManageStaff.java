@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.txsing.bookhotel.dblogic;
 
-package com.txsing.dblogic;
-
+import com.txsing.bookhotel.util.DBConnector;
+import com.txsing.bookhotel.util.SystemParameters;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,15 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Kara
  */
 public class ManageStaff extends HttpServlet {
-    
+
     String idS;
     String sqlDeleteStaff;
     Connection connection;
@@ -43,7 +42,7 @@ public class ManageStaff extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             out.print("<script type='text/javascript'>alert('successfully changed');"
-                        + "document.location.href='edit-staffs.jsp';</script>");
+                    + "document.location.href='edit-staffs.jsp';</script>");
         } finally {
             out.close();
         }
@@ -62,24 +61,15 @@ public class ManageStaff extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         idS = request.getParameter("idS");
-        sqlDeleteStaff = "delete from staff where idH = '" + SignIn.idH + "' and idS = '" + idS + "';";
+        sqlDeleteStaff = "delete from staffs where idH = '" + SignIn.idH + "' and idS = '" + idS + "';";
         // Database
         try {
-            //驱动程序名 
-            String driverName="com.mysql.jdbc.Driver"; 
-            //数据库用户名 
-            String databaseUserName="txsing"; 
-            //密码 
-            String userPasswd="scse1196"; 
-            //数据库名 
-            String dbName="test"; 
-            //联结字符串 
-            String url="jdbc:mysql://localhost/"+dbName+"?user="+databaseUserName+"&password="+userPasswd; 
-            Class.forName(driverName).newInstance(); 
-            connection=DriverManager.getConnection(url); 
-            statement = connection.createStatement(); 
+            connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                    SystemParameters.user, SystemParameters.passwd);
+            statement = connection.createStatement();
             statement.executeUpdate(sqlDeleteStaff);
-            
+            statement.close();
+            connection.close();
             processRequest(request, response);
         } catch (Exception e) {
         }

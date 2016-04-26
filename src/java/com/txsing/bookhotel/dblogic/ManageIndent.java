@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.txsing.bookhotel.dblogic;
 
-package com.txsing.dblogic;
-
+import com.txsing.bookhotel.util.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -15,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,7 +26,10 @@ import java.util.logging.Logger;
  * @author root
  */
 public class ManageIndent extends HttpServlet {
+
     public static String idO;
+    Connection connection;
+    Statement statement;
     String idO1;
 
     /**
@@ -46,42 +47,35 @@ public class ManageIndent extends HttpServlet {
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyyMMddhhmmss");
         Calendar curday = Calendar.getInstance();
         Date currentday = curday.getTime();
-        String operate_time = "'" + simpleDateFormat1.format(currentday)+"'";
-        String idL = "'" + simpleDateFormat2.format(currentday) + "L"+SignIn.idH+"'";
+        String operate_time = "'" + simpleDateFormat1.format(currentday) + "'";
+        String idL = "'" + simpleDateFormat2.format(currentday) + "L" + SignIn.idH + "'";
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            if(idO1.endsWith("1")){
+            if (idO1.endsWith("1")) {
                 out.print(idO);
-            }else{
-                String sql2 = "update room set status = 'available' where idH = '"+SignIn.idH+"' and idR in"+
-                        "(select idR from indent where idO = '"+idO+"')";
-                String sql3 = "delete from user where idU in (select idU from indent where idO = '"+idO+"')"; 
-                String sql4 = "insert into log values("+idL+",'"+SignIn.idH+"','"+SignIn.idS+"','"+idO+"',"+operate_time+","+"'cancel indent')";
+            } else {
+                String sql2 = "update rooms set status = 'available' where idH = '" + SignIn.idH + "' and idR in"
+                        + "(select idR from indents where idO = '" + idO + "')";
+                String sql3 = "delete from users where idU in (select idU from indents where idO = '" + idO + "')";
+                String sql4 = "insert into logs values(" + idL + ",'" + SignIn.idH + "','" + SignIn.idS + "','" + idO + "'," + operate_time + "," + "'cancel indent')";
 //                request.getSession().setAttribute("sql2", sql2);
 //                request.getSession().setAttribute("sql3", sql3);  
 //                request.getSession().setAttribute("sql4", sql4);  
-                String userName = "txsing";
-                String userPasswd = "scse1196";
-                String dbName = "test";
-                String url = "jdbc:mysql://localhost/" + dbName + "?user=" + userName + "&password=" + userPasswd;
                 try {
-                    Class.forName("com.mysql.jdbc.Driver").newInstance();
-                } catch (InstantiationException ex) {
-                    Logger.getLogger(ManageIndent.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IllegalAccessException ex) {
-                    Logger.getLogger(ManageIndent.class.getName()).log(Level.SEVERE, null, ex);
+                    connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                            SystemParameters.user, SystemParameters.passwd);
+                    statement = connection.createStatement();
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
                 }
-                Connection connection = DriverManager.getConnection(url);
-                Statement statement = connection.createStatement();
                 statement.executeUpdate(sql2);
                 statement.executeUpdate(sql3);
                 statement.executeUpdate(sql4);
- //               response.sendRedirect("CancelIndent.jsp");
+                //response.sendRedirect("CancelIndent.jsp");
                 out.print("<script type='text/javascript'>alert('successfully changed');"
                         + "document.location.href='edit-orders.jsp';</script>");
             }
-
         } finally {
             out.close();
         }
@@ -100,7 +94,7 @@ public class ManageIndent extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         idO1 = request.getParameter("idO");
-        idO=idO1.substring(0, idO1.length()-1);
+        idO = idO1.substring(0, idO1.length() - 1);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {

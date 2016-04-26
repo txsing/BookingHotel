@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.txsing.dblogic;
+package com.txsing.bookhotel.dblogic;
 
+import com.txsing.bookhotel.util.DBConnector;
+import com.txsing.bookhotel.util.SystemParameters;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -80,23 +82,13 @@ public class SignIn extends HttpServlet {
         idH = request.getParameter("idH");
         userName = request.getParameter("userName");
         password = request.getParameter("password");
-        sqlIdH = "SELECT * FROM staff WHERE idS = '"+ userName +"' AND password = '"+ password +"' "
+        sqlIdH = "SELECT * FROM staffs WHERE idS = '"+ userName +"' AND password = '"+ password +"' "
                 +"AND idH= '"+idH+"';";
         // Database
         try {
-            //驱动程序名 
-            String driverName="com.mysql.jdbc.Driver"; 
-            //数据库用户名 
-            String databaseUserName="txsing"; 
-            //密码 
-            String userPasswd="scse1196"; 
-            //数据库名 
-            String dbName="test"; 
-            //联结字符串 
-            String url="jdbc:mysql://localhost/"+dbName+"?user="+databaseUserName+"&password="+userPasswd; 
-            Class.forName(driverName).newInstance(); 
-            connection=DriverManager.getConnection(url); 
-            statement = connection.createStatement(); 
+            connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                    SystemParameters.user, SystemParameters.passwd);
+            statement = connection.createStatement();
             rs = statement.executeQuery(sqlIdH);
             processRequest(request, response);
         } catch (Exception e) {

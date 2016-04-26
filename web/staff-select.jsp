@@ -1,10 +1,10 @@
 <%-- 
     Document   : staff-select
     Created on : Dec 18, 2013, 3:21:58 PM
-    Author     : Kara
+    Author     : txsing
 --%>
 
-<%@page import="com.txsing.dblogic.SignIn"%>
+<%@page import="com.txsing.bookhotel.dblogic.SignIn"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
