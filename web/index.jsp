@@ -132,9 +132,9 @@
                     <div id="intro">
                         <h1><span>Welcome to HOTEL!</span></h1>
                         <p>
-                            This is an web site for you to search a suitable hotel and book a room. The operation is simple and
-                            it is so convenience. And for the hotel staff and management, this web site can be used to manege the
-                            information about the hotel. Enjoy the tour!
+                            This is an web site for you to search a suitable hotel and book a room, the operations involved are simple and
+                            convenient. Also for hotel management, this web site can be used by staffs to manege the
+                            information of their hotel. Enjoy the tour!
                         </p>
                         <p>
                             <a href="hotel-search.jsp" class="large gray button">Start Booking</a>

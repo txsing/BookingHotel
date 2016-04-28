@@ -14,10 +14,10 @@ public class SystemParameters {
     public static final String Driver_MySQL = "com.mysql.jdbc.Driver";
     
     public static final String UrlPrefix_PostgreSQL = "jdbc:postgresql";
-    public static String server = System.getenv("DB_PORT").substring(3); //default value
-    //public static String port = "5432";
+    public static String server = System.getenv("DB_PORT").substring(3); //tcp:
+    
     public static String user = "postgres";
-    public static String passwd = "scse";
+    public static String passwd = "root";
     public static String dbname = "bookhotel";
 
     public static String getUrl() {
