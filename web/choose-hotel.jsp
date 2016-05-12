@@ -108,16 +108,14 @@
                     <div id="blog" class="container section">
                         <div id="blog-content" class="full-width column">
                             <%
-                                ResultSet rs = null;
-                                try{
-                                    String sql = (String) session.getAttribute("sql");
-                                    Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
-                                            SystemParameters.user, SystemParameters.passwd);
-                                    Statement statement = connection.createStatement();
-                                    rs = statement.executeQuery(sql);
-                                }catch(Exception e){
-                                    System.err.println(e.getMessage());
-                                }                            
+                                //ResultSet rs = null;
+
+                                String sql = (String) session.getAttribute("sql");
+                                Connection connection = DBConnector.connectPostgres(SystemParameters.getUrl(),
+                                        SystemParameters.user, SystemParameters.passwd);
+                                Statement statement = connection.createStatement();
+                                ResultSet rs = statement.executeQuery(sql);
+
                             %>
                             <form action="ChooseHotel" method="get">
                                 <% while (rs.next()) {%>
