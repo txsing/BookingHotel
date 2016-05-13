@@ -1,9 +1,11 @@
-* iZoomer_Web is a web application that provides online photo zooming service.
+* BookHotel is a web application that provides online hotel booking service.
 
-* This project is under support of China National College Students Innovation Training Programme
+* BookHotel is developed in JSP, and it uses PostgreSQL database to store the data, tomcat as web server. 
 
-* The logic behind is a self-designed adaptive interpolation algorithm based on Cubic Spline Fitting. The algorithm first computes the value of new pixels according to the cubic spline fitted by the 16 surrounding pixels, and then interpolates the new pixel into the raw low-resolution image to improve its quality.
+* BookHotel is already containerized, the related images can be pulled down from DockerHub
+(https://hub.docker.com/r/txsing/bookhotel-postgres/)
+(https://hub.docker.com/r/txsing/bookhotel-tomcat/)
 
-![](https://github.com/txsing/iZoomer_Web/raw/master/demo/demo1.png)
-![](https://github.com/txsing/iZoomer_Web/raw/master/demo/demo2.png)
+![](https://github.com/txsing/BookHotel/raw/master/demo/demo1.png)
+![](https://github.com/txsing/BookHotel/raw/master/demo/demo2.png)
 
